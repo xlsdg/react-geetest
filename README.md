@@ -34,21 +34,19 @@ Then:
 ``` javascript
 import Geetest from 'react-geetest';
 
-if (!geetest.gt) {
+if (!geetest.challenge) {
     return null;
 }
 
-const handlerGeetest = function(captcha) {
-    captcha.onSuccess(function() {
-        console.log(captcha.getValidate());
-    });
+const handlerGeetest = function(result) {
+    console.log(result);
 };
 
 return (
     <Geetest gt={geetest.gt}
              challenge={geetest.challenge}
              success={geetest.success}
-             handler={handlerGeetest}
+             onSuccess={handlerGeetest}
              https={true}/>
 );
 ```
@@ -56,15 +54,19 @@ return (
 ## Properties
 
 ``` javascript
-gt:         React.PropTypes.string.isRequired,
-challenge:  React.PropTypes.string.isRequired,
-success:    React.PropTypes.number.isRequired,
-https:      React.PropTypes.bool,
-product:    React.PropTypes.string,
-lang:       React.PropTypes.string,
-sandbox:    React.PropTypes.bool,
-width:      React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-handler:    React.PropTypes.func
+  gt:           React.PropTypes.string.isRequired,
+  challenge:    React.PropTypes.string.isRequired,
+  success:      React.PropTypes.number.isRequired,
+  https:        React.PropTypes.bool,
+  product:      React.PropTypes.string,
+  lang:         React.PropTypes.string,
+  sandbox:      React.PropTypes.bool,
+  width:        React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  onReady:      React.PropTypes.func,
+  onRefresh:    React.PropTypes.func,
+  onSuccess:    React.PropTypes.func,
+  onFail:       React.PropTypes.func,
+  onError:      React.PropTypes.func
 ```
 
 [Read More](http://www.geetest.com/install/sections/idx-client-sdk.html)
