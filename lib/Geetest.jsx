@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 class Geetest extends React.Component {
   constructor(props) {
@@ -69,19 +70,19 @@ class Geetest extends React.Component {
 }
 
 Geetest.propTypes = {
-  gt: React.PropTypes.string.isRequired,
-  challenge: React.PropTypes.string.isRequired,
-  success: React.PropTypes.number.isRequired,
-  https: React.PropTypes.bool,
-  product: React.PropTypes.string,
-  lang: React.PropTypes.string,
-  sandbox: React.PropTypes.bool,
-  width: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  onReady: React.PropTypes.func,
-  onRefresh: React.PropTypes.func,
-  onSuccess: React.PropTypes.func,
-  onFail: React.PropTypes.func,
-  onError: React.PropTypes.func
+  gt: PropTypes.string.isRequired,
+  challenge: PropTypes.string.isRequired,
+  success: PropTypes.number.isRequired,
+  https: PropTypes.bool,
+  product: PropTypes.string,
+  lang: PropTypes.string,
+  sandbox: PropTypes.bool,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onReady: PropTypes.func,
+  onRefresh: PropTypes.func,
+  onSuccess: PropTypes.func,
+  onFail: PropTypes.func,
+  onError: PropTypes.func
 };
 
 Geetest.defaultProps = {
