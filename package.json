@@ -2,7 +2,7 @@
   "name": "react-geetest",
   "title": "react-geetest",
   "description": "A Geetest component for React",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/Geetest.jsx",
   "files": [
     "lib/Geetest.jsx"
