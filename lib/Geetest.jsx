@@ -9,18 +9,46 @@ class Geetest extends React.Component {
     this.state = {};
     this._init = this._init.bind(this);
   }
+  // componentWillMount() {
+    // console.log('componentWillMount');
+  // }
+  componentDidMount() {
+    // console.log('componentDidMount');
+    if (this.props.challenge) {
+      this._init();
+    }
+  }
+  // componentWillReceiveProps(nextProps) {
+    // console.log('componentWillReceiveProps', nextProps);
+  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('shouldComponentUpdate', nextProps, nextState);
+    return nextProps.challenge !== this.props.challenge;
+  }
+  // componentWillUpdate(nextProps, nextState) {
+    // console.log('componentWillUpdate', nextProps, nextState);
+  // }
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('componentDidUpdate', prevProps, prevState);
+    if (this.props.challenge) {
+      this._init();
+    }
+  }
+  // componentWillUnmount() {
+    // console.log('componentWillUnmount');
+  // }
   _init() {
     // console.log('_init');
     let that = this;
     return window.initGeetest({
-        gt: that.props.gt,
-        challenge: that.props.challenge,
-        https: that.props.https,
-        product: that.props.product,
-        lang: that.props.lang,
-        sandbox: that.props.sandbox,
-        width: that.props.width,
-        offline: !that.props.success
+      gt: that.props.gt,
+      challenge: that.props.challenge,
+      https: that.props.https,
+      product: that.props.product,
+      lang: that.props.lang,
+      sandbox: that.props.sandbox,
+      width: that.props.width,
+      offline: !that.props.success
     }, function(geetest) {
       geetest.appendTo(ReactDOM.findDOMNode(that));
       geetest.onReady(that.props.onReady);
@@ -33,38 +61,10 @@ class Geetest extends React.Component {
       geetest.onError(that.props.onError);
     });
   }
-  componentWillMount() {
-    // console.log('componentWillMount');
-  }
-  componentDidMount() {
-    // console.log('componentDidMount');
-    if (this.props.challenge) {
-      this._init();
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    // console.log('componentWillReceiveProps', nextProps);
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    // console.log('shouldComponentUpdate', nextProps, nextState);
-    return nextProps.challenge !== this.props.challenge;
-  }
-  componentWillUpdate(nextProps, nextState) {
-    // console.log('componentWillUpdate', nextProps, nextState);
-  }
-  componentDidUpdate(prevProps, prevState) {
-    // console.log('componentDidUpdate', prevProps, prevState);
-    if (this.props.challenge) {
-      this._init();
-    }
-  }
-  componentWillUnmount() {
-    // console.log('componentWillUnmount');
-  }
   render() {
     // console.log('render');
     return (
-      <div key="geetest-captcha"></div>
+      <div key="geetest-captcha" />
     );
   }
 }
