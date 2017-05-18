@@ -24,9 +24,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "prop-types": "^15.5.6",
-    "react": "^15.5.3",
-    "react-dom": "^15.5.3"
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {},
   "scripts": {}
