@@ -36,9 +36,7 @@
     "prettier/unicorn",
     "prettier/vue"
   ],
-  "globals": {
-    "BASE_HOST": true
-  },
+  "globals": {},
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -52,15 +50,6 @@
   ],
   "root": true,
   "rules": {
-    "import/no-unresolved": [
-      "error",
-      {
-        "ignore": [
-          "^@/",
-          "^umi/"
-        ]
-      }
-    ],
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "prettier/prettier": "error"
