@@ -13,13 +13,17 @@ $ npm install react-geetest --save
 ``` react
 import Geetest from 'react-geetest';
 
-const onSuccess = isSuccess => console.log(isSuccess);
+export default () => {
+  const onSuccess = isSuccess => console.log(isSuccess);
 
-<Geetest
-  gt="your-gt"
-  challenge="your-challenge"
-  onSuccess={onSuccess}
-/>
+  return (
+    <Geetest
+      gt="your-gt"
+      challenge="your-challenge"
+      onSuccess={onSuccess}
+    />
+  );
+};
 ```
 
 ## Properties
