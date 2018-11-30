@@ -1,4 +1,5 @@
 # react-geetest
+
 A Geetest component for React
 
 ## Installation
@@ -6,7 +7,6 @@ A Geetest component for React
 ```
 $ npm install react-geetest --save
 ```
-
 
 ## Usage
 

@@ -1,0 +1,68 @@
+{
+  "env": {
+    "amd": false,
+    "applescript": false,
+    "atomtest": false,
+    "browser": true,
+    "commonjs": false,
+    "embertest": false,
+    "es6": true,
+    "greasemonkey": false,
+    "jasmine": false,
+    "jest": false,
+    "jquery": false,
+    "meteor": false,
+    "mocha": false,
+    "mongo": false,
+    "nashorn": false,
+    "node": false,
+    "phantomjs": false,
+    "prototypejs": false,
+    "protractor": false,
+    "qunit": false,
+    "serviceworker": false,
+    "shared-node-browser": false,
+    "shelljs": false,
+    "webextensions": false,
+    "worker": false
+  },
+  "extends": [
+    "airbnb",
+    "eslint-config-alloy/react",
+    "plugin:prettier/recommended",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "prettier/unicorn",
+    "prettier/vue"
+  ],
+  "globals": {
+    "BASE_HOST": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "root": true,
+  "rules": {
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^@/",
+          "^umi/"
+        ]
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "prettier/prettier": "error"
+  }
+}

@@ -1,33 +1,62 @@
 {
-  "name": "react-geetest",
-  "title": "react-geetest",
+  "author": "xLsDg <xlsdg@qq.com> (https://blog.xlsdg.org/)",
+  "browser": "dist/geetest.js",
+  "bugs": {
+    "url": "https://github.com/xlsdg/react-geetest/issues"
+  },
   "description": "A Geetest component for React",
-  "version": "1.0.2",
-  "main": "lib/Geetest.jsx",
+  "devDependencies": {
+    "bili": "^3.4.2",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-alloy": "^1.4.2",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.15.3",
+    "rollup-plugin-prettier": "^0.5.0",
+    "rollup-plugin-vue": "^4.3.2",
+    "stylelint": "^9.9.0",
+    "stylelint-config-prettier": "^4.0.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-order": "^2.0.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
   "files": [
-    "lib/Geetest.jsx"
+    "dist",
+    "src"
   ],
   "homepage": "https://github.com/xlsdg/react-geetest",
-  "author": "xLsDg <xlsdg@qq.com> (https://blog.xlsdg.org/)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xlsdg/react-geetest.git"
-  },
+  "jsdelivr": "dist/geetest.min.js",
   "keywords": [
     "react",
     "geetest",
     "react-geetest",
     "library"
   ],
-  "bugs": {
-    "url": "https://github.com/xlsdg/react-geetest/issues"
-  },
   "license": "MIT",
-  "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+  "main": "dist/geetest.cjs.js",
+  "module": "dist/geetest.es.js",
+  "name": "react-geetest",
+  "peerDependencies": {
+    "react": "latest"
   },
-  "devDependencies": {},
-  "scripts": {}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xlsdg/react-geetest.git"
+  },
+  "scripts": {
+    "build": "bili",
+    "release:major": "npm version major && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:patch": "npm version patch && npm publish"
+  },
+  "source": "src/geetest.jsx",
+  "unpkg": "dist/geetest.min.js",
+  "version": "1.0.2"
 }

@@ -1,77 +1,110 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-class Geetest extends React.Component {
+export default class Geetest extends React.Component {
+  // static propTypes = {
+  //   gt: PropTypes.string.isRequired,
+  //   challenge: PropTypes.string.isRequired,
+  //   success: PropTypes.number.isRequired,
+  //   https: PropTypes.bool,
+  //   product: PropTypes.string,
+  //   lang: PropTypes.string,
+  //   sandbox: PropTypes.bool,
+  //   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  //   onReady: PropTypes.func,
+  //   onSuccess: PropTypes.func,
+  //   onError: PropTypes.func,
+  //   onClose: PropTypes.func
+  // }
+
+  static defaultProps = {
+    https: false,
+    product: 'popup',
+    lang: 'zh-cn',
+    sandbox: false,
+    width: '300px',
+    onReady: () => {},
+    onSuccess: () => {},
+    onError: () => {},
+    onClose: () => {}
+  }
+
   constructor(props) {
-    // console.log('constructor', props);
     super(props);
+    this.dom = null;
     this.state = {
       ins: null,
       script: null
     };
-    this._init = this._init.bind(this);
-    this._ready = this._ready.bind(this);
-    this._load = this._load.bind(this);
-    this._destroy = this._destroy.bind(this);
   }
+
   // componentWillMount() {
-    // const that = this;
-    // console.log('componentWillMount', that.props, that.state);
+  //   const that = this;
+  //   console.log('componentWillMount', that.props, that.state);
   // }
+
   componentDidMount() {
     const that = this;
     // console.log('componentDidMount', that.props, that.state);
-    that._init();
+    that.init();
   }
+
   // componentWillReceiveProps(nextProps) {
-    // const that = this;
-    // console.log('componentWillReceiveProps', that.props, nextProps);
+  //   const that = this;
+  //   console.log('componentWillReceiveProps', that.props, nextProps);
   // }
+
   shouldComponentUpdate(nextProps, nextState) {
     const that = this;
     // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
-    return nextProps.challenge !== that.props.challenge;
+    return (nextProps.challenge !== that.props.challenge);
   }
+
   // componentWillUpdate(nextProps, nextState) {
-    // const that = this;
-    // console.log('componentWillUpdate', that.props, nextProps, that.state, nextState);
+  //   const that = this;
+  //   console.log('componentWillUpdate', that.props, nextProps, that.state, nextState);
   // }
+
   componentDidUpdate(prevProps, prevState) {
     const that = this;
     // console.log('componentDidUpdate', prevProps, that.props, prevState, that.state);
-    that._init();
+    that.init();
   }
+
   componentWillUnmount() {
     const that = this;
     // console.log('componentWillUnmount', that.props, that.state);
-    that._destroy();
+    that.destroy();
   }
-  _init() {
+
+  init = () => {
     const that = this;
     // console.log('_init');
 
     if (window.initGeetest) {
-      return that._ready();
+      that.ready();
+      return;
     }
 
     const ds = document.createElement('script');
     ds.type = 'text/javascript';
     ds.async = true;
     ds.charset = 'utf-8';
+
     if (ds.readyState) {
-      ds.onreadystatechange = function() {
+      ds.onreadystatechange = () => {
         if (ds.readyState === 'loaded' || ds.readyState === 'complete') {
           ds.onreadystatechange = null;
-          that._ready();
+          that.ready();
         }
       };
     } else {
-      ds.onload = function() {
+      ds.onload = () => {
         ds.onload = null;
-        that._ready();
+        that.ready();
       };
     }
+
     ds.src = `${document.location.protocol}//static.geetest.com/static/tools/gt.js?_t=${(new Date()).getTime()}`;
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ds, s);
@@ -80,49 +113,73 @@ class Geetest extends React.Component {
       script: ds
     });
   }
-  _ready() {
+
+  ready = () => {
     const that = this;
     // console.log('_ready');
     const {
-      gt, challenge, https, product, lang, sandbox, width, success
+      gt,
+      challenge,
+      https,
+      product,
+      lang,
+      sandbox,
+      width,
+      success
     } = that.props;
-    const {
-      ins
-    } = that.state;
+    const { ins } = that.state;
 
     if (!window.initGeetest) {
       return;
     }
 
     if (ins) {
-      return that._load(ins);
+      that.load(ins);
+      return;
     }
 
-    return window.initGeetest({
-      gt, challenge, https, product, lang, sandbox, width, offline: !success
-    }, function(geetest) {
-      that._load(geetest);
+    window.initGeetest({
+      gt,
+      challenge,
+      https,
+      product,
+      lang,
+      sandbox,
+      width,
+      offline: !success,
+      new_captcha: true
+    }, (geetest) => {
+      that.load(geetest);
 
       that.setState({
         ins: geetest
       });
     });
   }
-  _load(ins) {
+
+  load = (ins) => {
     const that = this;
     // console.log('_load');
+
+    if (!that.dom) {
+      return;
+    }
+
     const {
-      onReady, onRefresh, onSuccess, onFail, onError
+      onReady,
+      onSuccess,
+      onError,
+      onClose
     } = that.props;
 
-    ins.appendTo(ReactDOM.findDOMNode(that));
+    ins.appendTo(that.dom);
     ins.onReady(onReady);
-    ins.onRefresh(onRefresh);
     ins.onSuccess(() => onSuccess(ins.getValidate()));
-    ins.onFail(onFail);
     ins.onError(onError);
+    ins.onClose(onClose);
   }
-  _destroy() {
+
+  destroy = () => {
     const that = this;
     // that.state.script.parentNode.removeChild(that.state.script);
     that.setState({
@@ -130,48 +187,18 @@ class Geetest extends React.Component {
       script: null
     });
   }
+
   render() {
     const that = this;
     // console.log('render');
-    const {
-      challenge
-    } = that.props;
+    const { challenge } = that.props;
 
     return (
       <div
         className="i-geetest"
         key={challenge}
+        ref={(e) => {that.dom = e;}}
       />
     );
   }
 }
-
-Geetest.propTypes = {
-  gt: PropTypes.string.isRequired,
-  challenge: PropTypes.string.isRequired,
-  success: PropTypes.number.isRequired,
-  https: PropTypes.bool,
-  product: PropTypes.string,
-  lang: PropTypes.string,
-  sandbox: PropTypes.bool,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onReady: PropTypes.func,
-  onRefresh: PropTypes.func,
-  onSuccess: PropTypes.func,
-  onFail: PropTypes.func,
-  onError: PropTypes.func
-};
-
-Geetest.defaultProps = {
-  https: false,
-  product: 'float',
-  lang: 'zh-cn',
-  sandbox: false,
-  onReady: function() {},
-  onRefresh: function() {},
-  onSuccess: function() {},
-  onFail: function() {},
-  onError: function() {}
-};
-
-export default Geetest;
