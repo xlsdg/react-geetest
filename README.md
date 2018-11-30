@@ -13,15 +13,12 @@ $ npm install react-geetest --save
 ``` react
 import Geetest from 'react-geetest';
 
-const handlerGeetest = function(result) {
-  console.log(result);
-};
+const onSuccess = isSuccess => console.log(isSuccess);
 
 <Geetest
   gt="your-gt"
   challenge="your-challenge"
-  success="your-success"
-  onSuccess={handlerGeetest}
+  onSuccess={onSuccess}
 />
 ```
 
@@ -30,20 +27,23 @@ const handlerGeetest = function(result) {
 ``` javascript
   gt:           React.PropTypes.string.isRequired,
   challenge:    React.PropTypes.string.isRequired,
-  success:      React.PropTypes.number.isRequired,
-  https:        React.PropTypes.bool,
+  offline:      React.PropTypes.bool,
+  newCaptcha:   React.PropTypes.bool,
   product:      React.PropTypes.string,
+  width:        React.PropTypes.string,
   lang:         React.PropTypes.string,
-  sandbox:      React.PropTypes.bool,
-  width:        React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  https:        React.PropTypes.bool,
+  timeout:      React.PropTypes.number,
+  area:         React.PropTypes.string,
+  nextWidth:    React.PropTypes.string,
+  bgColor:      React.PropTypes.string,
   onReady:      React.PropTypes.func,
-  onRefresh:    React.PropTypes.func,
   onSuccess:    React.PropTypes.func,
-  onFail:       React.PropTypes.func,
-  onError:      React.PropTypes.func
+  onError:      React.PropTypes.func,
+  onClose:      React.PropTypes.func,
 ```
 
-[Read More](http://www.geetest.com/install/sections/idx-client-sdk.html)
+[Read More](https://docs.geetest.com/install/deploy/client/web)
 
 # License
 

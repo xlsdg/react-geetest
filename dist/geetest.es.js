@@ -93,20 +93,6 @@ var Geetest =
   (function(_React$Component) {
     _inherits(Geetest, _React$Component);
 
-    // static propTypes = {
-    //   gt: PropTypes.string.isRequired,
-    //   challenge: PropTypes.string.isRequired,
-    //   success: PropTypes.number.isRequired,
-    //   https: PropTypes.bool,
-    //   product: PropTypes.string,
-    //   lang: PropTypes.string,
-    //   sandbox: PropTypes.bool,
-    //   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    //   onReady: PropTypes.func,
-    //   onSuccess: PropTypes.func,
-    //   onError: PropTypes.func,
-    //   onClose: PropTypes.func
-    // }
     function Geetest(props) {
       var _this;
 
@@ -157,12 +143,16 @@ var Geetest =
         var _that$props = that.props,
           gt = _that$props.gt,
           challenge = _that$props.challenge,
-          https = _that$props.https,
+          offline = _that$props.offline,
+          newCaptcha = _that$props.newCaptcha,
           product = _that$props.product,
-          lang = _that$props.lang,
-          sandbox = _that$props.sandbox,
           width = _that$props.width,
-          success = _that$props.success;
+          lang = _that$props.lang,
+          https = _that$props.https,
+          timeout = _that$props.timeout,
+          area = _that$props.area,
+          nextWidth = _that$props.nextWidth,
+          bgColor = _that$props.bgColor;
         var ins = that.state.ins;
 
         if (!window.initGeetest) {
@@ -178,13 +168,16 @@ var Geetest =
           {
             gt: gt,
             challenge: challenge,
-            https: https,
+            offline: offline,
+            new_captcha: newCaptcha,
             product: product,
-            lang: lang,
-            sandbox: sandbox,
             width: width,
-            offline: !success,
-            new_captcha: true,
+            lang: lang,
+            https: https,
+            timeout: timeout,
+            area: area,
+            next_width: nextWidth,
+            bg_color: bgColor,
           },
           function(geetest) {
             that.load(geetest);
@@ -210,7 +203,7 @@ var Geetest =
         ins.appendTo(that.dom);
         ins.onReady(onReady);
         ins.onSuccess(function() {
-          return onSuccess(ins.getValidate());
+          return onSuccess(ins.getValidate(), ins);
         });
         ins.onError(onError);
         ins.onClose(onClose);
@@ -296,11 +289,18 @@ var Geetest =
   })(React.Component);
 
 _defineProperty(Geetest, 'defaultProps', {
-  https: false,
+  // gt: '',
+  // challenge: '',
+  offline: false,
+  newCaptcha: true,
   product: 'popup',
-  lang: 'zh-cn',
-  sandbox: false,
   width: '300px',
+  lang: 'zh-cn',
+  https: false,
+  timeout: 30000,
+  // area: '',
+  nextWidth: '90%',
+  bgColor: 'black',
   onReady: function onReady() {},
   onSuccess: function onSuccess() {},
   onError: function onError() {},
