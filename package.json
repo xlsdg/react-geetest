@@ -1,18 +1,28 @@
 {
   "name": "react-geetest",
-  "title": "react-geetest",
+  "version": "1.0.2",
   "description": "A Geetest component for React",
-  "version": "0.0.1",
-  "main": "lib/Geetest.jsx",
-  "files": [
-    "lib/Geetest.jsx"
-  ],
-  "homepage": "https://github.com/xlsdg/react-geetest",
   "author": "xLsDg <xlsdg@qq.com> (https://blog.xlsdg.org/)",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/xlsdg/react-geetest.git"
   },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "main": "dist/geetest.cjs.js",
+  "browser": "dist/geetest.umd.js",
+  "module": "dist/geetest.esm.js",
+  "jsdelivr": "dist/geetest.cjs.js",
+  "unpkg": "dist/geetest.cjs.js",
+  "source": "src/geetest.jsx",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://github.com/xlsdg/react-geetest",
   "keywords": [
     "react",
     "geetest",
@@ -22,11 +32,32 @@
   "bugs": {
     "url": "https://github.com/xlsdg/react-geetest/issues"
   },
-  "license": "MIT",
-  "dependencies": {
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0"
+  "peerDependencies": {
+    "react": "latest"
   },
-  "devDependencies": {},
-  "scripts": {}
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-compat": "^2.6.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "rollup": "^0.67.3",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-babel-minify": "^6.2.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-postcss": "^1.6.3"
+  }
 }

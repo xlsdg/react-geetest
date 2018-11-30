@@ -10,45 +10,19 @@ $ npm install react-geetest --save
 
 ## Usage
 
-In `index.html` :
-
-``` html
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>Demo</title>
-  <link rel="stylesheet" href="index.css" />
-  <script src="//static.geetest.com/static/tools/gt.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <script src="common.js"></script>
-  <script src="index.js"></script>
-</body>
-</html>
-```
-
-Then:
-
-``` javascript
+``` react
 import Geetest from 'react-geetest';
 
-if (!geetest.challenge) {
-    return null;
-}
-
 const handlerGeetest = function(result) {
-    console.log(result);
+  console.log(result);
 };
 
-return (
-    <Geetest gt={geetest.gt}
-             challenge={geetest.challenge}
-             success={geetest.success}
-             onSuccess={handlerGeetest}
-             https={true}/>
-);
+<Geetest
+  gt="your-gt"
+  challenge="your-challenge"
+  success="your-success"
+  onSuccess={handlerGeetest}
+/>
 ```
 
 ## Properties
