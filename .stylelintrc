@@ -25,7 +25,7 @@
       "at-rules",
       "less-mixins"
     ],
-    'order/properties-order': [
+    "order/properties-order": [
       "box-sizing",
       "display",
       "position",
