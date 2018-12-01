@@ -10,12 +10,12 @@ module.exports = {
     'react': 'React'
   },
   filename: '[name][suffix].js',
-  name: 'geetest',
+  // name: 'geetest',
   // inline: false,
   // cwd: '',
-  external: [
-    'react'
-  ],
+  // external: [
+  //   'react'
+  // ],
   banner: false,
   postcss: {
     modules: true
