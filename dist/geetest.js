@@ -136,9 +136,8 @@
             };
           }
 
-          ds.src = ''
-            .concat(document.location.protocol, '//static.geetest.com/static/tools/gt.js?_t=')
-            .concat(new Date().getTime());
+          var protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
+          ds.src = ''.concat(protocol, '//static.geetest.com/static/tools/gt.js?_t=').concat(new Date().getTime());
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(ds, s);
           that.setState({

@@ -96,7 +96,8 @@ export default class Geetest extends React.Component {
       };
     }
 
-    ds.src = `${document.location.protocol}//static.geetest.com/static/tools/gt.js?_t=${new Date().getTime()}`;
+    const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
+    ds.src = `${protocol}//static.geetest.com/static/tools/gt.js?_t=${new Date().getTime()}`;
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ds, s);
 
