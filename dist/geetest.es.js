@@ -103,12 +103,20 @@ var Geetest =
       _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'init', function() {
         var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('_init');
 
+        var id = 'react-geetest';
+
         if (window.initGeetest) {
           that.ready();
           return;
         }
 
+        if (document.getElementById(id)) {
+          that.wait();
+          return;
+        }
+
         var ds = document.createElement('script');
+        ds.id = id;
         ds.type = 'text/javascript';
         ds.async = true;
         ds.charset = 'utf-8';
@@ -133,6 +141,49 @@ var Geetest =
         s.parentNode.insertBefore(ds, s);
         that.setState({
           script: ds,
+        });
+      });
+
+      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'wait', function() {
+        var that = _assertThisInitialized(_assertThisInitialized(_this));
+
+        var _that$state = that.state,
+          timer = _that$state.timer,
+          count = _that$state.count;
+
+        if (timer || count > 0) {
+          return;
+        }
+
+        var newTimer = window.setInterval(function() {
+          if (window.initGeetest) {
+            window.clearInterval(newTimer);
+            that.setState({
+              timer: null,
+              count: 0,
+            });
+            window.setTimeout(that.ready.bind(that));
+            return;
+          }
+
+          var c = that.state.count;
+          c -= 1;
+
+          if (c < 1) {
+            window.clearInterval(newTimer);
+            that.setState({
+              timer: null,
+              count: 0,
+            });
+          } else {
+            that.setState({
+              count: c,
+            });
+          }
+        }, 100);
+        that.setState({
+          timer: newTimer,
+          count: 10,
         });
       });
 
@@ -209,18 +260,25 @@ var Geetest =
       });
 
       _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'destroy', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // that.state.script.parentNode.removeChild(that.state.script);
+        var that = _assertThisInitialized(_assertThisInitialized(_this));
 
-        that.setState({
-          ins: null,
-          script: null,
-        });
+        var timer = that.state.timer;
+
+        if (timer) {
+          window.clearInterval(timer);
+        } // that.state.script.parentNode.removeChild(that.state.script);
+        // that.setState({
+        //   ins: null,
+        //   script: null,
+        // });
       });
 
       _this.dom = null;
       _this.state = {
         ins: null,
         script: null,
+        timer: null,
+        count: 0,
       };
       return _this;
     } // componentWillMount() {
@@ -239,14 +297,12 @@ var Geetest =
         //   const that = this;
         //   console.log('componentWillReceiveProps', that.props, nextProps);
         // }
-      },
-      {
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextProps, nextState) {
-          var that = this; // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
-
-          return nextProps.challenge !== that.props.challenge;
-        }, // componentWillUpdate(nextProps, nextState) {
+        // shouldComponentUpdate(nextProps, nextState) {
+        //   const that = this;
+        //   // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
+        //   return nextProps.challenge !== that.props.challenge;
+        // }
+        // componentWillUpdate(nextProps, nextState) {
         //   const that = this;
         //   console.log('componentWillUpdate', that.props, nextProps, that.state, nextState);
         // }
@@ -272,10 +328,9 @@ var Geetest =
         value: function render() {
           var that = this; // console.log('render');
 
-          var challenge = that.props.challenge;
+          var className = that.props.className;
           return React.createElement('div', {
-            className: 'i-geetest',
-            key: challenge,
+            className: className,
             ref: function ref(e) {
               that.dom = e;
             },
@@ -288,6 +343,7 @@ var Geetest =
   })(React.Component);
 
 _defineProperty(Geetest, 'defaultProps', {
+  className: 'i-geetest',
   // gt: '',
   // challenge: '',
   offline: false,
