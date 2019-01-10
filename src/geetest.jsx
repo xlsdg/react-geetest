@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default class Geetest extends React.Component {
+const SCRIPT_ID = 'react-geetest';
+
+export default class NECaptcha extends React.Component {
   static defaultProps = {
     className: 'i-geetest',
     // gt: '',
@@ -27,8 +29,7 @@ export default class Geetest extends React.Component {
     this.state = {
       ins: null,
       script: null,
-      timer: null,
-      count: 0,
+      elem: null,
     };
   }
 
@@ -48,11 +49,42 @@ export default class Geetest extends React.Component {
   //   console.log('componentWillReceiveProps', that.props, nextProps);
   // }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   const that = this;
-  //   // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
-  //   return nextProps.challenge !== that.props.challenge;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    const that = this;
+    // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
+    const {
+      className,
+      gt,
+      challenge,
+      offline,
+      newCaptcha,
+      product,
+      width,
+      lang,
+      https,
+      timeout,
+      area,
+      nextWidth,
+      bgColor,
+    } = that.props;
+
+    const isUpdate =
+      className !== nextProps.className ||
+      gt !== nextProps.gt ||
+      challenge !== nextProps.challenge ||
+      offline !== nextProps.offline ||
+      newCaptcha !== nextProps.newCaptcha ||
+      product !== nextProps.product ||
+      width !== nextProps.width ||
+      lang !== nextProps.lang ||
+      https !== nextProps.https ||
+      timeout !== nextProps.timeout ||
+      area !== nextProps.area ||
+      nextWidth !== nextProps.nextWidth ||
+      bgColor !== nextProps.bgColor;
+
+    return isUpdate;
+  }
 
   // componentWillUpdate(nextProps, nextState) {
   //   const that = this;
@@ -73,21 +105,29 @@ export default class Geetest extends React.Component {
 
   init = () => {
     const that = this;
-    // console.log('_init');
-    const id = 'react-geetest';
+    // console.log('init');
+    const { elem } = that.state;
 
     if (window.initGeetest) {
       that.ready();
       return;
     }
 
-    if (document.getElementById(id)) {
-      that.wait();
+    const script = document.getElementById(SCRIPT_ID);
+    if (script) {
+      if (elem) {
+        return;
+      }
+
+      script.addEventListener('Im-ready', that.ready.bind(that), false);
+      that.setState({
+        elem: script,
+      });
       return;
     }
 
     const ds = document.createElement('script');
-    ds.id = id;
+    ds.id = SCRIPT_ID;
     ds.type = 'text/javascript';
     ds.async = true;
     ds.charset = 'utf-8';
@@ -97,12 +137,14 @@ export default class Geetest extends React.Component {
         if (ds.readyState === 'loaded' || ds.readyState === 'complete') {
           ds.onreadystatechange = null;
           that.ready();
+          that.triggerEvent('Im-ready');
         }
       };
     } else {
       ds.onload = () => {
         ds.onload = null;
         that.ready();
+        that.triggerEvent('Im-ready');
       };
     }
 
@@ -116,51 +158,7 @@ export default class Geetest extends React.Component {
     });
   };
 
-  wait = () => {
-    const that = this;
-    const { timer, count } = that.state;
-
-    if (timer || count > 0) {
-      return;
-    }
-
-    const newTimer = window.setInterval(() => {
-      if (window.initGeetest) {
-        window.clearInterval(newTimer);
-
-        that.setState({
-          timer: null,
-          count: 0,
-        });
-
-        window.setTimeout(that.ready.bind(that));
-        return;
-      }
-
-      let c = that.state.count;
-      c -= 1;
-
-      if (c < 1) {
-        window.clearInterval(newTimer);
-
-        that.setState({
-          timer: null,
-          count: 0,
-        });
-      } else {
-        that.setState({
-          count: c,
-        });
-      }
-    }, 100);
-
-    that.setState({
-      timer: newTimer,
-      count: 10,
-    });
-  };
-
-  ready = () => {
+  ready = event => {
     const that = this;
     // console.log('_ready');
     const {
@@ -177,7 +175,7 @@ export default class Geetest extends React.Component {
       nextWidth,
       bgColor,
     } = that.props;
-    const { ins } = that.state;
+    const { ins, elem } = that.state;
 
     if (!window.initGeetest) {
       return;
@@ -211,11 +209,15 @@ export default class Geetest extends React.Component {
         });
       }
     );
+
+    if (elem) {
+      elem.removeEventListener('Im-ready', that.ready.bind(that), false);
+    }
   };
 
   load = ins => {
     const that = this;
-    // console.log('_load');
+    // console.log('load');
 
     if (!that.dom) {
       return;
@@ -233,17 +235,36 @@ export default class Geetest extends React.Component {
 
   destroy = () => {
     const that = this;
-    const { timer } = that.state;
+    // console.log('destroy');
+    const { elem } = that.state;
 
-    if (timer) {
-      window.clearInterval(timer);
+    if (elem) {
+      elem.removeEventListener('Im-ready', that.ready.bind(that), false);
     }
 
-    // that.state.script.parentNode.removeChild(that.state.script);
+    // script.parentNode.removeChild(that.state.script);
+
     // that.setState({
     //   ins: null,
     //   script: null,
+    //   elem: null,
     // });
+  };
+
+  triggerEvent = name => {
+    const that = this;
+    // console.log('triggerEvent');
+    const { elem, script } = that.state;
+
+    if (!elem && !script) {
+      return;
+    }
+
+    const e = document.createEvent('Event');
+    e.initEvent(name, true, true);
+
+    const dom = elem || script;
+    dom.dispatchEvent(e);
   };
 
   render() {

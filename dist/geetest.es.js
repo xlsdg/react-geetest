@@ -88,35 +88,46 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
-var Geetest =
+var SCRIPT_ID = 'react-geetest';
+
+var NECaptcha =
   /*#__PURE__*/
   (function(_React$Component) {
-    _inherits(Geetest, _React$Component);
+    _inherits(NECaptcha, _React$Component);
 
-    function Geetest(props) {
+    function NECaptcha(props) {
       var _this;
 
-      _classCallCheck(this, Geetest);
+      _classCallCheck(this, NECaptcha);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Geetest).call(this, props));
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(NECaptcha).call(this, props));
 
       _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'init', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('_init');
+        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('init');
 
-        var id = 'react-geetest';
+        var elem = that.state.elem;
 
         if (window.initGeetest) {
           that.ready();
           return;
         }
 
-        if (document.getElementById(id)) {
-          that.wait();
+        var script = document.getElementById(SCRIPT_ID);
+
+        if (script) {
+          if (elem) {
+            return;
+          }
+
+          script.addEventListener('Im-ready', that.ready.bind(that), false);
+          that.setState({
+            elem: script,
+          });
           return;
         }
 
         var ds = document.createElement('script');
-        ds.id = id;
+        ds.id = SCRIPT_ID;
         ds.type = 'text/javascript';
         ds.async = true;
         ds.charset = 'utf-8';
@@ -126,12 +137,14 @@ var Geetest =
             if (ds.readyState === 'loaded' || ds.readyState === 'complete') {
               ds.onreadystatechange = null;
               that.ready();
+              that.triggerEvent('Im-ready');
             }
           };
         } else {
           ds.onload = function() {
             ds.onload = null;
             that.ready();
+            that.triggerEvent('Im-ready');
           };
         }
 
@@ -144,50 +157,7 @@ var Geetest =
         });
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'wait', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this));
-
-        var _that$state = that.state,
-          timer = _that$state.timer,
-          count = _that$state.count;
-
-        if (timer || count > 0) {
-          return;
-        }
-
-        var newTimer = window.setInterval(function() {
-          if (window.initGeetest) {
-            window.clearInterval(newTimer);
-            that.setState({
-              timer: null,
-              count: 0,
-            });
-            window.setTimeout(that.ready.bind(that));
-            return;
-          }
-
-          var c = that.state.count;
-          c -= 1;
-
-          if (c < 1) {
-            window.clearInterval(newTimer);
-            that.setState({
-              timer: null,
-              count: 0,
-            });
-          } else {
-            that.setState({
-              count: c,
-            });
-          }
-        }, 100);
-        that.setState({
-          timer: newTimer,
-          count: 10,
-        });
-      });
-
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'ready', function() {
+      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'ready', function(event) {
         var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('_ready');
 
         var _that$props = that.props,
@@ -203,7 +173,9 @@ var Geetest =
           area = _that$props.area,
           nextWidth = _that$props.nextWidth,
           bgColor = _that$props.bgColor;
-        var ins = that.state.ins;
+        var _that$state = that.state,
+          ins = _that$state.ins,
+          elem = _that$state.elem;
 
         if (!window.initGeetest) {
           return;
@@ -236,10 +208,14 @@ var Geetest =
             });
           }
         );
+
+        if (elem) {
+          elem.removeEventListener('Im-ready', that.ready.bind(that), false);
+        }
       });
 
       _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'load', function(ins) {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('_load');
+        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('load');
 
         if (!that.dom) {
           return;
@@ -260,25 +236,42 @@ var Geetest =
       });
 
       _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'destroy', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this));
+        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('destroy');
 
-        var timer = that.state.timer;
+        var elem = that.state.elem;
 
-        if (timer) {
-          window.clearInterval(timer);
-        } // that.state.script.parentNode.removeChild(that.state.script);
+        if (elem) {
+          elem.removeEventListener('Im-ready', that.ready.bind(that), false);
+        } // script.parentNode.removeChild(that.state.script);
         // that.setState({
         //   ins: null,
         //   script: null,
+        //   elem: null,
         // });
+      });
+
+      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'triggerEvent', function(name) {
+        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('triggerEvent');
+
+        var _that$state2 = that.state,
+          elem = _that$state2.elem,
+          script = _that$state2.script;
+
+        if (!elem && !script) {
+          return;
+        }
+
+        var e = document.createEvent('Event');
+        e.initEvent(name, true, true);
+        var dom = elem || script;
+        dom.dispatchEvent(e);
       });
 
       _this.dom = null;
       _this.state = {
         ins: null,
         script: null,
-        timer: null,
-        count: 0,
+        elem: null,
       };
       return _this;
     } // componentWillMount() {
@@ -286,7 +279,7 @@ var Geetest =
     //   console.log('componentWillMount', that.props, that.state);
     // }
 
-    _createClass(Geetest, [
+    _createClass(NECaptcha, [
       {
         key: 'componentDidMount',
         value: function componentDidMount() {
@@ -297,12 +290,42 @@ var Geetest =
         //   const that = this;
         //   console.log('componentWillReceiveProps', that.props, nextProps);
         // }
-        // shouldComponentUpdate(nextProps, nextState) {
-        //   const that = this;
-        //   // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
-        //   return nextProps.challenge !== that.props.challenge;
-        // }
-        // componentWillUpdate(nextProps, nextState) {
+      },
+      {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+          var that = this; // console.log('shouldComponentUpdate', that.props, nextProps, that.state, nextState);
+
+          var _that$props3 = that.props,
+            className = _that$props3.className,
+            gt = _that$props3.gt,
+            challenge = _that$props3.challenge,
+            offline = _that$props3.offline,
+            newCaptcha = _that$props3.newCaptcha,
+            product = _that$props3.product,
+            width = _that$props3.width,
+            lang = _that$props3.lang,
+            https = _that$props3.https,
+            timeout = _that$props3.timeout,
+            area = _that$props3.area,
+            nextWidth = _that$props3.nextWidth,
+            bgColor = _that$props3.bgColor;
+          var isUpdate =
+            className !== nextProps.className ||
+            gt !== nextProps.gt ||
+            challenge !== nextProps.challenge ||
+            offline !== nextProps.offline ||
+            newCaptcha !== nextProps.newCaptcha ||
+            product !== nextProps.product ||
+            width !== nextProps.width ||
+            lang !== nextProps.lang ||
+            https !== nextProps.https ||
+            timeout !== nextProps.timeout ||
+            area !== nextProps.area ||
+            nextWidth !== nextProps.nextWidth ||
+            bgColor !== nextProps.bgColor;
+          return isUpdate;
+        }, // componentWillUpdate(nextProps, nextState) {
         //   const that = this;
         //   console.log('componentWillUpdate', that.props, nextProps, that.state, nextState);
         // }
@@ -339,10 +362,10 @@ var Geetest =
       },
     ]);
 
-    return Geetest;
+    return NECaptcha;
   })(React.Component);
 
-_defineProperty(Geetest, 'defaultProps', {
+_defineProperty(NECaptcha, 'defaultProps', {
   className: 'i-geetest',
   // gt: '',
   // challenge: '',
@@ -362,4 +385,4 @@ _defineProperty(Geetest, 'defaultProps', {
   onClose: function onClose() {},
 });
 
-export default Geetest;
+export default NECaptcha;
