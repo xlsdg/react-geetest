@@ -90,6 +90,15 @@ function _possibleConstructorReturn(self, call) {
 
 var SCRIPT_ID = 'react-geetest';
 
+var typeOf = function typeOf(type) {
+  return function(object) {
+    return Object.prototype.toString.call(object) === '[object '.concat(type, ']');
+  };
+}; // const isString = typeOf('String');
+// const isObject = typeOf('Object');
+
+var isFunction = typeOf('Function');
+
 var NECaptcha =
   /*#__PURE__*/
   (function(_React$Component) {
@@ -102,8 +111,8 @@ var NECaptcha =
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(NECaptcha).call(this, props));
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'init', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('init');
+      _defineProperty(_assertThisInitialized(_this), 'init', function() {
+        var that = _assertThisInitialized(_this); // console.log('init');
 
         var elem = that.state.elem;
 
@@ -157,8 +166,8 @@ var NECaptcha =
         });
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'ready', function(event) {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('_ready');
+      _defineProperty(_assertThisInitialized(_this), 'ready', function(event) {
+        var that = _assertThisInitialized(_this); // console.log('_ready');
 
         var _that$props = that.props,
           gt = _that$props.gt,
@@ -214,8 +223,8 @@ var NECaptcha =
         }
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'load', function(ins) {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('load');
+      _defineProperty(_assertThisInitialized(_this), 'load', function(ins) {
+        var that = _assertThisInitialized(_this); // console.log('load');
 
         if (!that.dom) {
           return;
@@ -227,16 +236,26 @@ var NECaptcha =
           onError = _that$props2.onError,
           onClose = _that$props2.onClose;
         ins.appendTo(that.dom);
-        ins.onReady(onReady);
+
+        if (isFunction(ins.onReady)) {
+          ins.onReady(onReady);
+        }
+
         ins.onSuccess(function() {
           return onSuccess(ins.getValidate(), ins);
         });
-        ins.onError(onError);
-        ins.onClose(onClose);
+
+        if (isFunction(ins.onError)) {
+          ins.onError(onError);
+        }
+
+        if (isFunction(ins.onClose)) {
+          ins.onClose(onClose);
+        }
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'destroy', function() {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('destroy');
+      _defineProperty(_assertThisInitialized(_this), 'destroy', function() {
+        var that = _assertThisInitialized(_this); // console.log('destroy');
 
         var elem = that.state.elem;
 
@@ -250,8 +269,8 @@ var NECaptcha =
         // });
       });
 
-      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'triggerEvent', function(name) {
-        var that = _assertThisInitialized(_assertThisInitialized(_this)); // console.log('triggerEvent');
+      _defineProperty(_assertThisInitialized(_this), 'triggerEvent', function(name) {
+        var that = _assertThisInitialized(_this); // console.log('triggerEvent');
 
         var _that$state2 = that.state,
           elem = _that$state2.elem,

@@ -2,6 +2,12 @@ import React from 'react';
 
 const SCRIPT_ID = 'react-geetest';
 
+const typeOf = type => object => Object.prototype.toString.call(object) === `[object ${type}]`;
+
+// const isString = typeOf('String');
+// const isObject = typeOf('Object');
+const isFunction = typeOf('Function');
+
 export default class NECaptcha extends React.Component {
   static defaultProps = {
     className: 'i-geetest',
@@ -227,10 +233,19 @@ export default class NECaptcha extends React.Component {
 
     ins.appendTo(that.dom);
 
-    ins.onReady(onReady);
+    if (isFunction(ins.onReady)) {
+      ins.onReady(onReady);
+    }
+
     ins.onSuccess(() => onSuccess(ins.getValidate(), ins));
-    ins.onError(onError);
-    ins.onClose(onClose);
+
+    if (isFunction(ins.onError)) {
+      ins.onError(onError);
+    }
+
+    if (isFunction(ins.onClose)) {
+      ins.onClose(onClose);
+    }
   };
 
   destroy = () => {
