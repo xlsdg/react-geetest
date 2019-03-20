@@ -238,7 +238,13 @@ var NECaptcha =
         ins.appendTo(that.dom);
 
         if (isFunction(ins.onReady)) {
-          ins.onReady(onReady);
+          ins.onReady(function() {
+            for (var _len = arguments.length, arg = new Array(_len), _key = 0; _key < _len; _key++) {
+              arg[_key] = arguments[_key];
+            }
+
+            return onReady.apply(void 0, arg.concat([ins]));
+          });
         }
 
         ins.onSuccess(function() {
@@ -246,11 +252,23 @@ var NECaptcha =
         });
 
         if (isFunction(ins.onError)) {
-          ins.onError(onError);
+          ins.onError(function() {
+            for (var _len2 = arguments.length, arg = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+              arg[_key2] = arguments[_key2];
+            }
+
+            return onError.apply(void 0, arg.concat([ins]));
+          });
         }
 
         if (isFunction(ins.onClose)) {
-          ins.onClose(onClose);
+          ins.onClose(function() {
+            for (var _len3 = arguments.length, arg = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+              arg[_key3] = arguments[_key3];
+            }
+
+            return onClose.apply(void 0, arg.concat([ins]));
+          });
         }
       });
 

@@ -234,17 +234,17 @@ export default class NECaptcha extends React.Component {
     ins.appendTo(that.dom);
 
     if (isFunction(ins.onReady)) {
-      ins.onReady(onReady);
+      ins.onReady((...arg) => onReady(...arg, ins));
     }
 
     ins.onSuccess(() => onSuccess(ins.getValidate(), ins));
 
     if (isFunction(ins.onError)) {
-      ins.onError(onError);
+      ins.onError((...arg) => onError(...arg, ins));
     }
 
     if (isFunction(ins.onClose)) {
-      ins.onClose(onClose);
+      ins.onClose((...arg) => onClose(...arg, ins));
     }
   };
 
