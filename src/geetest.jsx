@@ -44,7 +44,7 @@ export default class Geetest extends React.PureComponent {
   componentDidMount() {
     const that = this;
     // console.log('componentDidMount', that.props, that.state);
-    that.init();
+    that.create();
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -87,7 +87,7 @@ export default class Geetest extends React.PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const that = this;
     // console.log('componentDidUpdate', prevProps, that.props, prevState, that.state);
-    that.init();
+    that.create();
   }
 
   componentWillUnmount() {
@@ -96,9 +96,9 @@ export default class Geetest extends React.PureComponent {
     that.destroy();
   }
 
-  init = () => {
+  create = () => {
     const that = this;
-    // console.log('init');
+    // console.log('create');
     // const {  } = that.state;
 
     if (window.initGeetest) {
@@ -170,7 +170,7 @@ export default class Geetest extends React.PureComponent {
     }
 
     if (that.instance) {
-      that.load(that.instance);
+      that.attach(that.instance);
       return;
     }
 
@@ -191,7 +191,7 @@ export default class Geetest extends React.PureComponent {
       },
       instance => {
         that.instance = instance;
-        that.load(instance);
+        that.attach(instance);
       }
     );
 
@@ -200,9 +200,9 @@ export default class Geetest extends React.PureComponent {
     }
   };
 
-  load = instance => {
+  attach = instance => {
     const that = this;
-    // console.log('load');
+    // console.log('attach');
     const { onReady, onSuccess, onError, onClose } = that.props;
 
     if (!that.dom || !that.dom.current) {
