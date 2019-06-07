@@ -1,36 +1,33 @@
-'use strict';
-
 module.exports = {
-  input: 'src/geetest.jsx',
-  outDir: 'dist',
-  // config: '',
-  format: ['cjs', 'umd', 'umd-min', 'es'],
-  moduleName: 'Geetest',
-  global: {
-    'react': 'React'
+  babel: {
+    // asyncToPromises: true,
+    // babelrc: false,
+    // configFile: false,
+    jsx: 'react',
+    // minimal: false,
+    // objectAssign: 'myAssign',
   },
-  filename: '[name][suffix].js',
-  name: 'geetest',
-  // inline: false,
-  // cwd: '',
-  // external: [
-  //   'react'
-  // ],
   banner: false,
-  postcss: {
-    modules: true
-  },
-  js: 'babel',
-  // plugin: ['vue'],
-  target: 'browser',
-  jsx: 'react',
-  // objectAssign: undefined,
-  // exports: 'auto',
-  // replace: {},
-  // alias: {},
-  pretty: true
+  bundleNodeModules: true,
   // env: {},
-  // virtualModules: {},
-  // sizeLimit: {},
-  // extendOptions: {},
+  // extendConfig: () => {},
+  // extendRollupConfig: () => {},
+  // externals: [],
+  globals: {
+    react: 'React',
+  },
+  input: 'src/geetest.jsx',
+  output: {
+    dir: 'dist',
+    extractCSS: false,
+    // fileName: '[name][suffix].js',
+    format: ['cjs-min', 'es-min', 'umd-min'],
+    minify: true,
+    moduleName: 'Geetest',
+    sourceMap: true,
+    sourceMapExcludeSources: true,
+    target: 'browser',
+  },
+  // plugins: {},
+  // resolvePlugins: {},
 };

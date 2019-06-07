@@ -1,10 +1,10 @@
 # react-geetest
 
-A Geetest component for React
+> A Geetest component for React
 
 ## Installation
 
-```
+```bash
 $ npm install react-geetest --save
 ```
 
@@ -50,6 +50,6 @@ export default () => {
 
 [Read More](https://docs.geetest.com/install/deploy/client/web)
 
-# License
+## License
 
 MIT

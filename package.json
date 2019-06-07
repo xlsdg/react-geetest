@@ -1,27 +1,25 @@
 {
-  "author": "xLsDg <xlsdg@qq.com> (https://blog.xlsdg.org/)",
-  "browser": "dist/geetest.js",
+  "author": "xLsDg <xlsdg@qq.com> (https://xlsdg.org/)",
+  "browser": "dist/geetest.umd.min.js",
   "bugs": {
     "url": "https://github.com/xlsdg/react-geetest/issues"
   },
   "description": "A Geetest component for React",
   "devDependencies": {
-    "bili": "^3.4.2",
-    "eslint": "^5.15.3",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-alloy": "^1.4.2",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.16.4",
-    "rollup-plugin-prettier": "^0.6.0",
-    "rollup-plugin-vue": "^4.7.2",
-    "stylelint": "^9.10.1",
-    "stylelint-config-prettier": "^5.0.0",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-order": "^2.1.0",
-    "vue-template-compiler": "^2.6.9"
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
+    "babel-eslint": "^10.0.1",
+    "bili": "^4.8.0",
+    "eslint": "^5.16.0",
+    "eslint-config-alloy": "^2.0.2",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "husky": "^2.4.0",
+    "lint-staged": "^8.2.0",
+    "prettier": "^1.18.0"
   },
   "engines": {
     "node": ">=8",
@@ -40,8 +38,8 @@
     "library"
   ],
   "license": "MIT",
-  "main": "dist/geetest.cjs.js",
-  "module": "dist/geetest.es.js",
+  "main": "dist/geetest.min.js",
+  "module": "dist/geetest.esm.min.js",
   "name": "react-geetest",
   "peerDependencies": {
     "react": "latest"
