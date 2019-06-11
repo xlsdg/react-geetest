@@ -265,7 +265,7 @@ export default class Geetest extends React.PureComponent {
 
     return (
       <div ref={that.dom} className={className}>
-        {children}
+        {children || null}
       </div>
     );
   }
