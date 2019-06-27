@@ -44,6 +44,8 @@ export default class Geetest extends React.PureComponent {
   componentDidMount() {
     const that = this;
     // console.log('componentDidMount', that.props, that.state);
+    // const {  } = that.props;
+    // const {  } = that.state;
     that.create();
   }
 
@@ -87,23 +89,27 @@ export default class Geetest extends React.PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const that = this;
     // console.log('componentDidUpdate', prevProps, that.props, prevState, that.state);
+    // const {  } = that.props;
+    // const {  } = that.state;
     that.create();
   }
 
   componentWillUnmount() {
     const that = this;
     // console.log('componentWillUnmount', that.props, that.state);
+    // const {  } = that.props;
+    // const {  } = that.state;
     that.destroy();
   }
 
   create = () => {
     const that = this;
     // console.log('create');
+    // const {  } = that.props;
     // const {  } = that.state;
 
     if (window.initGeetest) {
-      that.ready();
-      return;
+      return that.ready();
     }
 
     const script = document.getElementById(SCRIPT_ID);
@@ -127,28 +133,29 @@ export default class Geetest extends React.PureComponent {
       ds.onreadystatechange = () => {
         if (ds.readyState === 'loaded' || ds.readyState === 'complete') {
           ds.onreadystatechange = null;
-          that.ready();
           that.triggerEvent('Im-ready');
         }
       };
     } else {
       ds.onload = () => {
         ds.onload = null;
-        that.ready();
         that.triggerEvent('Im-ready');
       };
     }
 
     const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
     ds.src = `${protocol}//static.geetest.com/static/tools/gt.js?_t=${new Date().getTime()}`;
+
     const s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(ds, s);
+
+    ds.addEventListener('Im-ready', that.ready, false);
     that.script = ds;
   };
 
   ready = event => {
     const that = this;
-    // console.log('_ready');
+    // console.log('ready');
     const {
       gt,
       challenge,
@@ -170,8 +177,7 @@ export default class Geetest extends React.PureComponent {
     }
 
     if (that.instance) {
-      that.attach(that.instance);
-      return;
+      return that.attach(that.instance);
     }
 
     window.initGeetest(
@@ -194,16 +200,13 @@ export default class Geetest extends React.PureComponent {
         that.attach(instance);
       }
     );
-
-    if (that.script && isFunction(that.script.removeEventListener)) {
-      that.script.removeEventListener('Im-ready', that.ready, false);
-    }
   };
 
   attach = instance => {
     const that = this;
     // console.log('attach');
     const { onReady, onSuccess, onError, onClose } = that.props;
+    // const {  } = that.state;
 
     if (!that.dom || !that.dom.current) {
       return;
@@ -229,24 +232,25 @@ export default class Geetest extends React.PureComponent {
   destroy = () => {
     const that = this;
     // console.log('destroy');
+    // const {  } = that.props;
     // const {  } = that.state;
 
     if (that.script && isFunction(that.script.removeEventListener)) {
       that.script.removeEventListener('Im-ready', that.ready, false);
       // that.script.parentNode.removeChild(that.script);
+      that.script = null;
     }
 
     if (that.instance && isFunction(that.instance.destroy)) {
       that.instance.destroy();
+      that.instance = null;
     }
-
-    that.instance = null;
-    that.script = null;
   };
 
   triggerEvent = name => {
     const that = this;
     // console.log('triggerEvent');
+    // const {  } = that.props;
     // const {  } = that.state;
 
     if (!that.script || !isFunction(that.script.dispatchEvent)) {
@@ -262,6 +266,7 @@ export default class Geetest extends React.PureComponent {
     const that = this;
     // console.log('render');
     const { className, children } = that.props;
+    // const {  } = that.state;
 
     return (
       <div ref={that.dom} className={className}>
