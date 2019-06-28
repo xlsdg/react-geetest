@@ -8,6 +8,12 @@ const typeOf = type => object => Object.prototype.toString.call(object) === `[ob
 // const isObject = typeOf('Object');
 const isFunction = typeOf('Function');
 
+function NewCustomEvent(type, params = { bubbles: false, cancelable: false, detail: null }) {
+  const event = document.createEvent('CustomEvent');
+  event.initCustomEvent(type, !!params.bubbles, !!params.cancelable, params.detail || {});
+  return event;
+}
+
 export default class Geetest extends React.PureComponent {
   static defaultProps = {
     className: 'i-geetest',
@@ -247,7 +253,7 @@ export default class Geetest extends React.PureComponent {
     }
   };
 
-  triggerEvent = name => {
+  triggerEvent = type => {
     const that = this;
     // console.log('triggerEvent');
     // const {  } = that.props;
@@ -257,9 +263,21 @@ export default class Geetest extends React.PureComponent {
       return;
     }
 
-    const e = document.createEvent('Event');
-    e.initEvent(name, true, true);
-    that.script.dispatchEvent(e);
+    const event = isFunction(window.CustomEvent)
+      ? new window.CustomEvent(type, {
+          detail: null,
+          bubbles: false,
+          cancelable: false,
+          // composed: false,
+        })
+      : NewCustomEvent(type, {
+          detail: null,
+          bubbles: false,
+          cancelable: false,
+          // composed: false,
+        });
+
+    that.script.dispatchEvent(event);
   };
 
   render() {
