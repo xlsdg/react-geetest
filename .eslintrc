@@ -26,11 +26,7 @@
     "webextensions": false,
     "worker": false
   },
-  "extends": [
-    "eslint-config-alloy/react",
-    "plugin:prettier/recommended",
-    "prettier/react"
-  ],
+  "extends": ["alloy", "alloy/react", "plugin:prettier/recommended", "prettier/react"],
   "globals": {},
   "parser": "babel-eslint",
   "parserOptions": {
@@ -40,13 +36,11 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "react-hooks",
-    "prettier"
-  ],
+  "plugins": ["react-hooks", "prettier"],
   "root": true,
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error",
+    "no-invalid-this": "off"
   }
 }
