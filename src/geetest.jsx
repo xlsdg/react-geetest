@@ -31,6 +31,9 @@ export default class Geetest extends React.PureComponent {
     hideSuccess: false,
     hideClose: false,
     hideRefresh: false,
+    area: null,
+    nextWidth: null,
+    bgColor: null,
     onReady: () => {},
     onSuccess: () => {},
     onError: () => {},
@@ -76,6 +79,9 @@ export default class Geetest extends React.PureComponent {
   //     hideSuccess,
   //     hideClose,
   //     hideRefresh,
+  //     area,
+  //     nextWidth,
+  //     bgColor,
   //   } = that.props;
 
   //   const isUpdate =
@@ -93,7 +99,10 @@ export default class Geetest extends React.PureComponent {
   //     zoomEle !== nextProps.zoomEle ||
   //     hideSuccess !== nextProps.hideSuccess ||
   //     hideClose !== nextProps.hideClose ||
-  //     hideRefresh !== nextProps.hideRefresh;
+  //     hideRefresh !== nextProps.hideRefresh ||
+  //     area !== nextProps.area ||
+  //     nextWidth !== nextProps.nextWidth ||
+  //     bgColor !== nextProps.bgColor;
 
   //   return isUpdate;
   // }
@@ -183,6 +192,9 @@ export default class Geetest extends React.PureComponent {
       hideSuccess,
       hideClose,
       hideRefresh,
+      area,
+      nextWidth,
+      bgColor,
     } = that.props;
     // const {  } = that.state;
 
@@ -210,6 +222,9 @@ export default class Geetest extends React.PureComponent {
         hideSuccess,
         hideClose,
         hideRefresh,
+        area,
+        nextWidth,
+        bgColor,
       },
       instance => {
         that.instance = instance;
