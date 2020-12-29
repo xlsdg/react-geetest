@@ -26,9 +26,11 @@ export default class Geetest extends React.PureComponent {
     lang: 'zh-cn',
     https: false,
     timeout: 30000,
-    // area: '',
-    nextWidth: '90%',
-    bgColor: 'black',
+    remUnit: 1,
+    zoomEle: null,
+    hideSuccess: false,
+    hideClose: false,
+    hideRefresh: false,
     onReady: () => {},
     onSuccess: () => {},
     onError: () => {},
@@ -69,9 +71,11 @@ export default class Geetest extends React.PureComponent {
   //     lang,
   //     https,
   //     timeout,
-  //     area,
-  //     nextWidth,
-  //     bgColor,
+  //     remUnit,
+  //     zoomEle,
+  //     hideSuccess,
+  //     hideClose,
+  //     hideRefresh,
   //   } = that.props;
 
   //   const isUpdate =
@@ -85,9 +89,11 @@ export default class Geetest extends React.PureComponent {
   //     lang !== nextProps.lang ||
   //     https !== nextProps.https ||
   //     timeout !== nextProps.timeout ||
-  //     area !== nextProps.area ||
-  //     nextWidth !== nextProps.nextWidth ||
-  //     bgColor !== nextProps.bgColor;
+  //     remUnit !== nextProps.remUnit ||
+  //     zoomEle !== nextProps.zoomEle ||
+  //     hideSuccess !== nextProps.hideSuccess ||
+  //     hideClose !== nextProps.hideClose ||
+  //     hideRefresh !== nextProps.hideRefresh;
 
   //   return isUpdate;
   // }
@@ -172,9 +178,11 @@ export default class Geetest extends React.PureComponent {
       lang,
       https,
       timeout,
-      area,
-      nextWidth,
-      bgColor,
+      remUnit,
+      zoomEle,
+      hideSuccess,
+      hideClose,
+      hideRefresh,
     } = that.props;
     // const {  } = that.state;
 
@@ -197,9 +205,11 @@ export default class Geetest extends React.PureComponent {
         lang,
         https,
         timeout,
-        area,
-        next_width: nextWidth,
-        bg_color: bgColor,
+        remUnit,
+        zoomEle,
+        hideSuccess,
+        hideClose,
+        hideRefresh,
       },
       instance => {
         that.instance = instance;

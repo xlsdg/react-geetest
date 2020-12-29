@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-$ npm install react-geetest --save
+npm install react-geetest --save
 ```
 
 ## Usage
@@ -39,16 +39,18 @@ export default () => {
   lang:         PropTypes.string,
   https:        PropTypes.bool,
   timeout:      PropTypes.number,
-  area:         PropTypes.string,
-  nextWidth:    PropTypes.string,
-  bgColor:      PropTypes.string,
+  remUnit:      PropTypes.number,
+  zoomEle:      PropTypes.string,
+  hideSuccess:  PropTypes.bool,
+  hideClose:    PropTypes.bool,
+  hideRefresh:  PropTypes.bool,
   onReady:      PropTypes.func,
   onSuccess:    PropTypes.func,
   onError:      PropTypes.func,
   onClose:      PropTypes.func,
 ```
 
-[Read More](https://docs.geetest.com/install/deploy/client/web)
+[Read More](https://docs.geetest.com/sensebot/apirefer/api/web)
 
 ## License
 

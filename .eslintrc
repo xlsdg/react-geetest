@@ -1,47 +1,17 @@
 {
   "env": {
-    "amd": false,
-    "applescript": false,
-    "atomtest": false,
     "browser": true,
-    "commonjs": false,
-    "embertest": false,
-    "es6": true,
-    "greasemonkey": false,
-    "jasmine": false,
-    "jest": false,
-    "jquery": false,
-    "meteor": false,
-    "mocha": false,
-    "mongo": false,
-    "nashorn": false,
     "node": true,
-    "phantomjs": false,
-    "prototypejs": false,
-    "protractor": false,
-    "qunit": false,
-    "serviceworker": false,
-    "shared-node-browser": false,
-    "shelljs": false,
-    "webextensions": false,
-    "worker": false
+    "es6": true
   },
-  "extends": ["alloy", "alloy/react", "plugin:prettier/recommended", "prettier/react"],
+  "extends": ["alloy", "alloy/react"],
   "globals": {},
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
   "plugins": ["react-hooks", "prettier"],
   "root": true,
   "rules": {
     "prettier/prettier": "error",
-    "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
     "no-invalid-this": "off"
   }
 }
