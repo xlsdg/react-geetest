@@ -56,5 +56,5 @@
   },
   "source": "src/geetest.jsx",
   "unpkg": "dist/geetest.min.js",
-  "version": "4.0.3"
+  "version": "5.0.0"
 }
